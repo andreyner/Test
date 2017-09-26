@@ -25,16 +25,21 @@ namespace ImageConverter_to_ASCII
             }
             DelegateProgressBar = SettingProgressBar;
         }
+        /// <summary>
+        /// Делегат для взаимодействия с прогресс-баром из другого потока
+        /// </summary>
         public  Action<int> DelegateProgressBar;
+        /// <summary>
+        /// Установка максимального значения прогресс-бара в зависимости от изображения
+        /// </summary>
+        /// <param name="maximum">Максимальное значение бара</param>
         void SettingProgressBar(int maximum)
         {
             progressBar1.Maximum = maximum;
             
         }
      
-        /// <summary>
-        /// Поле для хранения изображения
-        /// </summary>
+       
         public Bitmap Image {
 
             get
@@ -63,12 +68,16 @@ namespace ImageConverter_to_ASCII
             }
             
         }
+        /// <summary>
+        /// загруженное изображение
+        /// </summary>
        private Bitmap image;
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
                 //openFileDialog1.Filter = "Image Files(*.png,*jpg,*bmp,*ico,*jpeg,*gif) | *.png;*.jpg;*.bmp*;*.ico;*.jpeg;*.gif";
+                
                 openFileDialog1.Title = "Открытие файла";
                 openFileDialog1.Multiselect = false;
                 openFileDialog1.FileName = "";
@@ -101,19 +110,19 @@ namespace ImageConverter_to_ASCII
         /// <summary>
         /// Конвертер изображений
         /// </summary>
-        BaseConverter convertrer { get; set; }
+        Converter convertrer { get; set; }
         private async void button5_Click(object sender, EventArgs e)
         {
             try
             {
-                
+
                 progressBar1.Value = progressBar1.Minimum;
                 tableLayoutPanel7.Enabled = false;
                 btOpen.Enabled = false;
                 btStart.Enabled = false;
                 btStop.Enabled = true;
                 menuStrip1.Enabled = false;
-                convertrer = new PNG_JPG_Converter(this);
+                convertrer = new Converter(this);
                 chars = new List<string>();
                 foreach (var item in Chars.CheckedItems)
                 {
@@ -121,21 +130,27 @@ namespace ImageConverter_to_ASCII
                 }
                 tokenSource = new CancellationTokenSource();
                 CancellationToken token = tokenSource.Token;
-                Task<string>  first = Task.Run(
+                Task<string> first = Task.Run(
 
-                    () => convertrer.StartConverter(0, quality, token)
+                    () => convertrer.StartConverter(quality, token)
 
                     );
                 await first;
                 if (!tokenSource.IsCancellationRequested)
                 {
-                   
+
                     txt.DocumentText = "<pre>" + "<Font size=0>" + first.Result.Replace(" ", "") + "</Font></pre>";
                     res = first.Result.Replace("<BR>", Environment.NewLine).Replace(" ", "");
-  
+
                 }
-               
-             
+
+
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Отсутсвует изображение", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                trackBar1.Value = trackBar1.Minimum;
+
             }
             catch
             {
@@ -153,7 +168,9 @@ namespace ImageConverter_to_ASCII
 
         }
 
-
+        /// <summary>
+        /// Увеличение значения прогресс-бара
+        /// </summary>
         public void barIncrement()
         {
             progressBar1.Increment(1);
@@ -180,17 +197,14 @@ namespace ImageConverter_to_ASCII
             }
         }
 
-        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+       
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             quality = trackBar1.Value;
         }
         /// <summary>
-        /// Результат преобразования
+        /// Результат преобразования в ASCII символы
         /// </summary>
         string res;
         private void button2_Click(object sender, EventArgs e)
@@ -231,5 +245,17 @@ namespace ImageConverter_to_ASCII
         {
             button6_Click( sender, e);
         }
+
+        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+        }
+
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            button2_Click(sender, e);
+        }
+
+       
     }
 }

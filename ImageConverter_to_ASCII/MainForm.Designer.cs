@@ -49,7 +49,6 @@
             this.фАToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Chars = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -119,6 +118,7 @@
             // txt
             // 
             this.txt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txt.IsWebBrowserContextMenuEnabled = false;
             this.txt.Location = new System.Drawing.Point(572, 3);
             this.txt.MinimumSize = new System.Drawing.Size(20, 20);
             this.txt.Name = "txt";
@@ -153,7 +153,6 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.76033F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1139, 121);
             this.tableLayoutPanel4.TabIndex = 4;
-            this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
             // 
             // tableLayoutPanel6
             // 
@@ -334,8 +333,7 @@
             // 
             this.фАToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.открытьToolStripMenuItem,
-            this.сохранитьToolStripMenuItem,
-            this.выходToolStripMenuItem});
+            this.сохранитьToolStripMenuItem});
             this.фАToolStripMenuItem.Name = "фАToolStripMenuItem";
             this.фАToolStripMenuItem.Size = new System.Drawing.Size(48, 19);
             this.фАToolStripMenuItem.Text = "Файл";
@@ -345,20 +343,16 @@
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
             this.открытьToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.открытьToolStripMenuItem.Text = "Открыть";
+            this.открытьToolStripMenuItem.Click += new System.EventHandler(this.открытьToolStripMenuItem_Click);
             // 
             // сохранитьToolStripMenuItem
             // 
             this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
             this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.сохранитьToolStripMenuItem.Text = "Сохранить";
+            this.сохранитьToolStripMenuItem.Click += new System.EventHandler(this.сохранитьToolStripMenuItem_Click);
             // 
-            // выходToolStripMenuItem
-            // 
-            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.выходToolStripMenuItem.Text = "Выход";
-            // 
-            // chars
+            // Chars
             // 
             this.Chars.CheckOnClick = true;
             this.Chars.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -366,21 +360,46 @@
             this.Chars.FormattingEnabled = true;
             this.Chars.Items.AddRange(new object[] {
             "#",
-            "\\",
             "|",
             "@",
             "% ",
             "= ",
+            "*",
             "+ ",
             "*",
             ":",
             ";",
             "-",
             ".",
-            "/"});
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i",
+            "j",
+            "k",
+            "l",
+            "m",
+            "n",
+            "o",
+            "p",
+            "q",
+            "r",
+            "s",
+            "t",
+            "u",
+            "v",
+            "w",
+            "x",
+            "y",
+            "z"});
             this.Chars.Location = new System.Drawing.Point(4, 53);
             this.Chars.Margin = new System.Windows.Forms.Padding(4);
-            this.Chars.Name = "chars";
+            this.Chars.Name = "Chars";
             this.Chars.Size = new System.Drawing.Size(183, 529);
             this.Chars.TabIndex = 1;
             // 
@@ -477,7 +496,6 @@
         private System.Windows.Forms.ToolStripMenuItem фАToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
